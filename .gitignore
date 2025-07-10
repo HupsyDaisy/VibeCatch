@@ -4,6 +4,7 @@ results/
 *output.xml
 *report.html
 *playwright-log.txt
+.env
 
 
 # Byte-compiled / optimized / DLL files

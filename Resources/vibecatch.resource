@@ -2,11 +2,10 @@
 Library          String
 Library          Browser
 Variables        locators.py
+Variables        env_vars.py
 
 *** Variables ***
 ${URL}            https://env-5369504.paas.datacenter.fi/
-${USERNAME}       jutta.rautio@brightstraining.com
-${PASSWORD}       Vibecheck1!
 ${STATUS}         ${TRUE}
 @{QUESTIONS}      I like my job\n     I like my colleagues\n    
 ...    Amount of work is reasonable\n    My opinion is valued\n
@@ -88,21 +87,21 @@ Create Custom Poll
 Remove Polls
     [Documentation]    This removes all the polls that are created
     ...                Waits added so polls can be removed even when page is slowly working
-    Login To VibeCatch                            ${USERNAME}    ${PASSWORD}
-    Wait For Elements State                       ${PROJECT_LIST_ROW} >> nth=0    visible    timeout=120s
+    Login                                         ${USERNAME}    ${PASSWORD}
+    Wait For Elements State                       ${PROJECT_ROW} >> nth=0    
     WHILE    ${True}
-        Wait For Elements State                   ${PROJECT_ROW_SETTINGS_BUTTON} >> nth=0    visible    timeout=120s
-        Click                                     ${PROJECT_ROW_SETTINGS_BUTTON} >> nth=0
-        Wait For Elements State                   ${REMOVE_POLL_BUTTON}    visible    timeout=120s
-        Click                                     ${REMOVE_POLL_BUTTON}
-        Wait For Elements State                   ${REMOVE_POLL_BUTTON_SECOND}    visible    timeout=120s
-        Click                                     ${REMOVE_POLL_BUTTON_SECOND}
-        Wait For Elements State                   ${REMOVE_POLL_BUTTON_THIRD}    visible    timeout=120s
-        Click                                     ${REMOVE_POLL_BUTTON_THIRD}
-        Type Text                                 ${REMOVE_POLL_TEXT_INPUT}    DESTROY
-        Wait For Elements State                   ${REMOVE_POLL_BUTTON_FINAL}    visible    timeout=120s
-        Click                                     ${REMOVE_POLL_BUTTON_FINAL}
-        Wait For Elements State                   ${CREATE_NEW_POLL_BUTTON} >> nth=0    visible    timeout=120s
-        ${count}=   Browser.Get Element Count     ${PROJECT_LIST_ROW}
+        Wait For Elements State                   ${CHANGE_POLL_SETTINGS}      visible    timeout=3s
+        Click                                     ${CHANGE_POLL_SETTINGS}    
+        Wait For Elements State                   ${DELETE_POLL_BUTTON}    visible    timeout=120s
+        Click                                     ${DELETE_POLL_BUTTON}
+        Wait For Elements State                   ${DELETE_PROJECT_BUTTON}    visible    timeout=120s
+        Click                                     ${DELETE_PROJECT_BUTTON} 
+        Wait For Elements State                   ${DELETE_NOW_POLL_BUTTON}    visible    timeout=120s
+        Click                                     ${DELETE_NOW_POLL_BUTTON} 
+        Type Text                                 ${TYPE_DESTROY_FIELD}    DESTROY
+        Wait For Elements State                   ${VERIFY_REMOVAL_OK_BUTTON}   visible    timeout=120s
+        Click                                     ${VERIFY_REMOVAL_OK_BUTTON}
+        Wait For Elements State                   ${ADD_NEW_PROJECT} >> nth=0    visible    timeout=120s
+        ${count}=   Browser.Get Element Count     ${PROJECT_ROW} 
         IF    ${count} == 0                       BREAK
     END
