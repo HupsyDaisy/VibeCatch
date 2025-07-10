@@ -1,5 +1,6 @@
 venv/
 results/
+browser/
 *log.html
 *output.xml
 *report.html

@@ -7,9 +7,12 @@ Test Teardown    Close Browser
 *** Test Cases ***
 Login With Correct Credentials     ${username}    ${password}    ${TRUE}
     [Documentation]    Login with correct credentials
+    [Tags]    login
 
 Login With Wrong Username          Käyttäjä       ${password}    ${FALSE}
     [Documentation]    Login with incorrect username
+    [Tags]    login
 
 Login With Wrong Password          ${username}    Salasana       ${FALSE}
     [Documentation]    Login with incorrect password
+    [Tags]    login

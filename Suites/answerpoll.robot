@@ -3,29 +3,10 @@ Resource         ../Resources/vibecatch.resource
 Test Setup       Open VibeCheck
 Test Teardown    Close Browser
 
-*** Variables ***
-QUANTATIVE_0 = '//form-root/div/div[not(@hidden)]//a[@title="Quantity needs to be increased dramatically"]'
-QUANTATIVE_1 = '//form-root/div/div[not(@hidden)]//a[@title="Quantity needs to be increased considerably"]'         
-QUANTATIVE_2 = '//form-root/div/div[not(@hidden)]//a[@title="Quantity needs to be increased somewhat"]'
-QUANTATIVE_3 = '//form-root/div/div[not(@hidden)]//a[@title="Quantity needs to be increased slightly"]'
-ALL_GOOD_4 = '//form-root/div/div[not(@hidden)]//a[@title="Quantity and quality are good"]'
-QUALITY_3 = '//form-root/div/div[not(@hidden)]//a[@title="Quality needs to be improved slightly"]'
-QUALITY_2 = '//form-root/div/div[not(@hidden)]//a[@title="Quality needs to be improved somewhat"]'
-QUALITY_1 = '//form-root/div/div[not(@hidden)]//a[@title="Quality needs to be improved considerably"]'
-QUALITY_0 = '//form-root/div/div[not(@hidden)]//a[@title="Quality needs to be improved dramatically"]'
-
-${NAME_POLL}    QWL Poll
 
 *** Test Cases ***
-Fill In QWL Poll
+Login And Answer QWL Poll
+    [Documentation]    Logins and answers QWL Poll's all questions with same default answer.
+    [Tags]    QWL Poll
     Login    ${USERNAME}    ${PASSWORD} 
-    Click    //div[contains(@class,"projectRow")][div/span/a[contains(text(),"${NAME_POLL}")]]//a[@mattooltip="View poll form"]
-    Click    //a[@class="nextButton"]
-
-
-
-
-    
-
-*** Keywords ***
-Choose QWL Poll
+    Fill QWL Poll    

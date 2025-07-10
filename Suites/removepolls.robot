@@ -6,6 +6,7 @@ Test Teardown    Close Browser
 *** Test Cases ***
 Removing Polls VibeCheck
     [Documentation]    Test case removes all polls in the project row
+    [Tags]    Remove
     Remove Polls
 
 

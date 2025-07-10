@@ -9,7 +9,7 @@ ${URL}            https://env-5369504.paas.datacenter.fi/
 ${STATUS}         ${TRUE}
 @{QUESTIONS}      I like my job\n     I like my colleagues\n    
 ...    Amount of work is reasonable\n    My opinion is valued\n
-
+${NAME_POLL}    QWL Poll
 
 *** Keywords ***
 Open VibeCheck
@@ -105,3 +105,22 @@ Remove Polls
         ${count}=   Browser.Get Element Count     ${PROJECT_ROW} 
         IF    ${count} == 0                       BREAK
     END
+
+Fill QWL Poll
+    [Documentation]    Fill QWL Poll with All Good answer as default. 
+    Click    //div[contains(@class,"projectRow")][div/span/a[contains(text(),"${NAME_POLL}")]]//a[@mattooltip="View poll form"]
+    Switch Page    NEW
+    Click        ${NEXT_BUTTON_FEEDBACK}
+    ${visible_elements}    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL}
+    WHILE    ${True}
+        ${visible_elements}    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL}
+        Click    ${ALL_GOOD_4}
+        IF    ${visible_elements} >= 1
+            Click    ${NEXT_PAGE_BUTTON_QWL_POLL}
+        ELSE
+            BREAK
+        END
+    END
+    Click                           ${SEND_FEEDBACK_BUTTON}
+    Wait For Elements State         ${THANK_YOU_FEEDBACK_MESSAGE}     timeout=10
+    
