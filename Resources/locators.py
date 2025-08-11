@@ -40,3 +40,14 @@ NEXT_BUTTON_FEEDBACK = '//a[@class="nextButton"]'
 NEXT_PAGE_BUTTON_QWL_POLL = '//a[contains(@class,"nextPage")]'
 SEND_FEEDBACK_BUTTON = '//span[@class="pageButton sendFeedbackPageButton nextPage"]'
 THANK_YOU_FEEDBACK_MESSAGE = '//div[normalize-space(text())="Thank you for your feedback!"]'
+#create360poll
+CREATE_360_POLL_BUTTON = '//button[normalize-space()="Create a 360 feedback poll"]'
+ADD_QUESTION_BUTTON = '//vibe-settings-resources//a[contains(text(), "Add")]'
+SELECT_NEW_QUESTION = '//select[@id="readyMade"]'
+CLICK_FIRST_CHOICE = '(//a[@class="mat-mdc-tooltip-trigger btn btn-minimal"][normalize-space()="Select"])[1]'
+ADD_SELECTED_QUESTION = '//button[normalize-space()="Add 1 selected question"]'
+#answer360poll
+ENTER_NAME_POLL_ANSWER = '//input[@placeholder="Enter your name here"]'
+ENTER_EMAIL_POLL_ANSWER = '//input[@placeholder="Enter your email here"]'
+CONTAINS_EVALUATION_REPORT = '//*[contains(text(), "evaluation report")]'
+

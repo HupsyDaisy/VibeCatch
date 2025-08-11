@@ -1,6 +1,7 @@
 *** Settings ***
 Library          String
 Library          Browser
+Library          ../Libs/CustomLibrary.py
 Variables        locators.py
 Variables        env_vars.py
 
@@ -10,6 +11,7 @@ ${STATUS}         ${TRUE}
 @{QUESTIONS}      I like my job\n     I like my colleagues\n    
 ...    Amount of work is reasonable\n    My opinion is valued\n
 ${NAME_POLL}    QWL Poll
+${NAME_360_POLL}    360Poll
 
 *** Keywords ***
 Open VibeCheck
@@ -22,8 +24,8 @@ Login
     [Documentation]    Login to website 
     [Arguments]  ${username}     ${password}    
     Click        ${LOGIN_BUTTON}  
-    Type Text    ${USERNAME_FIELD}    ${username}
-    Type Text    ${PASSWORD_FIELD}   ${password}
+    Fill Text    ${USERNAME_FIELD}    ${username}
+    Fill Text    ${PASSWORD_FIELD}   ${password}
     Click        ${LOGIN_BUTTON2}
 
 Login And Return Status
@@ -67,7 +69,8 @@ Verify Poll Created
     [Documentation]    Verify that poll is created
     [Arguments]       ${pollname}
     Go To             ${URL}
-    Wait For Elements State    //*[contains(text(), "${pollname}")]
+    Sleep    10
+    Wait For Elements State    //*[contains(text(), "${pollname}")]    visible    timeout=120s
 
 Create Custom Poll
     [Documentation]    Generates new Custom Poll with own questions and saves it. 
@@ -83,6 +86,63 @@ Create Custom Poll
     END
     Click                       ${ADD_QUESTIONS_BUTTON2}
     RETURN                      Custom Poll ${random_string}
+
+Create 360 Poll 
+    [Documentation]    Generates new 360 Poll with random name automatically and adds one random question.        
+    Click                      ${ADD_NEW_PROJECT}
+    ${random_string}=     Generate Random String        5        [LOWER]
+    Type Text                  ${ADD_PROJECT_NAME}      360Poll ${random_string}
+    Click                      ${CREATE_360_POLL_BUTTON}
+    Wait For Elements State    ${ADD_QUESTION_BUTTON}    visible    timeout=20s
+    VAR    ${status}    ${False}
+    WHILE    not ${status}    limit=5
+        Click                  ${ADD_QUESTION_BUTTON} 
+        ${status}    Run Keyword And Return Status    Wait For Elements State    ${SELECT_NEW_QUESTION}    visible    timeout=3
+    END
+    Sleep    2
+    Wait For Elements State    ${SELECT_NEW_QUESTION}    visible    timeout=30s
+    Click                      ${SELECT_NEW_QUESTION} 
+    ${random_index}    Get Random Index Answer
+    Select Options By           ${SELECT_NEW_QUESTION}    index      ${random_index}     
+    Click                       ${CLICK_FIRST_CHOICE}
+    Click                       ${ADD_SELECTED_QUESTION}   
+    RETURN    360Poll ${random_string}
+
+Fill 360 Poll
+    [Documentation]    Fill 360 Poll with given answers in Poll_answers.csv
+    [Arguments]    
+    Click    //div[contains(@class,"projectRow")][div/span/a[contains(text(),"${NAME_360_POLL}")]]//a[@mattooltip="View poll form"]
+    Sleep    5
+    Switch Page    NEW
+    ${firstname}    Get Random First Name
+    Type Text    ${ENTER_NAME_POLL_ANSWER}    ${firstname}
+    ${email}    Get Email    ${firstname}
+    Type Text    ${ENTER_EMAIL_POLL_ANSWER}    ${email}
+    Click        ${NEXT_BUTTON_FEEDBACK}
+    Sleep    5
+    ${visible_elements}    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL} 
+    ${poll_data}=    Read Poll Data    ${CURDIR}/../Libs/Poll_answers.csv
+    Log    ${poll_data}
+    VAR    ${i}    0
+    WHILE    True    
+        ${current_question}    Get Text    //h3 >> nth=${i}
+        ${row}    Evaluate    next(d for d in ${poll_data} if d["question"] == "${current_question}")
+        Log    ${row}
+        ${answer}=      Set Variable    ${row['answer']}
+        Click    xpath=//a/span[contains(text(), "${answer}")] >> nth=${i}
+        Sleep    1
+        ${i}     Evaluate    ${i} + 1
+        ${visible_elements}    Get Element Count    ${SEND_FEEDBACK_BUTTON}
+        IF    ${visible_elements} >= 1
+            Click    ${SEND_FEEDBACK_BUTTON}
+            BREAK
+        ELSE
+            Click    ${NEXT_PAGE_BUTTON_QWL_POLL}
+        END
+    END                                                        
+    #Verify that poll is answered
+    Sleep    3
+    Wait For Elements State         ${CONTAINS_EVALUATION_REPORT}     timeout=10
 
 Remove Polls
     [Documentation]    This removes all the polls that are created
@@ -107,14 +167,16 @@ Remove Polls
     END
 
 Fill QWL Poll
-    [Documentation]    Fill QWL Poll with All Good answer as default. 
+    [Documentation]    Fill QWL Poll with random answers
     Click    //div[contains(@class,"projectRow")][div/span/a[contains(text(),"${NAME_POLL}")]]//a[@mattooltip="View poll form"]
+    Sleep    5
     Switch Page    NEW
     Click        ${NEXT_BUTTON_FEEDBACK}
     ${visible_elements}    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL}
     WHILE    ${True}
         ${visible_elements}    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL}
-        Click    ${ALL_GOOD_4}
+        ${random_locator}    Get Random Xpath Answer    
+        Click    ${${random_locator}}
         IF    ${visible_elements} >= 1
             Click    ${NEXT_PAGE_BUTTON_QWL_POLL}
         ELSE
