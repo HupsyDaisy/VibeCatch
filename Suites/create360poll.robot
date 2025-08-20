@@ -1,14 +1,19 @@
 *** Settings ***
 Resource         ../Resources/vibecatch.resource
-Test Setup       Open VibeCheck
-Test Teardown    Close Browser
+Suite Setup       Open And Login VibeCheck
+Suite Teardown    Close Browser
+Test Template    Create And Verify 360 Poll
 
 *** Test Cases ***
-Login And Create 360 Poll
-    [Documentation]    Logins and creates 360 Poll with default questionnaire and adds one ramdom question.
-    [Tags]    360
-    Login And Return Status    ${USERNAME}    ${PASSWORD}    
-    Sleep    15
-    ${pollname}    Create 360 Poll
-    Verify Poll Created    ${pollname}
 
+360 Poll Case 1        360 Poll    5    [LOWER]     7     3    12
+    [Documentation]    Log in and creates 360 Poll with parametric name and chosen index inbetween 3-12
+    [Tags]    Poll
+
+360 Poll Case 2        360 Poll    7    [UPPER]     RANDOM     3    12
+    [Documentation]    Log in and creates 360 Poll with parametric name and random index inbetween 3-12
+    [Tags]    Poll
+
+360 Poll Case 3        360 Poll    8    [NUMBERS]     2     3    12
+    [Documentation]    Log in and creates 360 Poll with parametric name and chosen index inbetween 3-12
+    [Tags]    Poll
