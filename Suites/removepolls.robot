@@ -1,6 +1,6 @@
 *** Settings ***
 Resource         ../Resources/vibecatch.resource
-Test Setup       Open VibeCheck
+Test Setup       Open And Login VibeCheck
 Test Teardown    Close Browser
 
 *** Test Cases ***
@@ -9,4 +9,7 @@ Removing Polls VibeCheck
     [Tags]    Remove
     Remove Polls
 
-
+Remove Specific Poll By Name
+    [Documentation]    Test case removes specific poll by name. 
+    [Tags]    Remove
+    Remove Single Poll By Name    360 Poll 83462942    DESTROY    120s

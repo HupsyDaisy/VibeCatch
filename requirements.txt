@@ -2,3 +2,5 @@ robotframework
 robotframework-browser
 python-dotenv
 pandas
+robotframework-requests
+robotframework-jsonlibrary
