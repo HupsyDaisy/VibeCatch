@@ -1,18 +1,17 @@
 *** Settings ***
-Resource         ../Resources/vibecatch.resource
-Test Template    Login Test
-Test Setup       Open VibeCheck
-Test Teardown    Close Browser
+Resource            ../Resources/vibecatch.resource
+
+Test Setup          Open VibeCheck
+Test Teardown       Close Browser
+Test Template       Login Test
+
+Test Tags           smoke
+
 
 *** Test Cases ***
-Login With Correct Credentials     ${username}    ${password}    ${TRUE}
-    [Documentation]    Login with correct credentials
-    [Tags]    smoke
-
-Login With Wrong Username          Käyttäjä       ${password}    ${FALSE}
-    [Documentation]    Login with incorrect username
-    [Tags]    smoke
-
-Login With Wrong Password          ${username}    Salasana       ${FALSE}
-    [Documentation]    Login with incorrect password
-    [Tags]    smoke
+Login With Correct Credentials    [Documentation]    Login with correct credentials
+    ${username}    ${password}    ${TRUE}
+Login With Wrong Username    [Documentation]    Login with incorrect username
+    Käyttäjä    ${password}    ${FALSE}
+Login With Wrong Password    [Documentation]    Login with incorrect password
+    ${username}    Salasana    ${FALSE}

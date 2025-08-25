@@ -38,11 +38,17 @@ class CustomLibrary:
     
     @keyword
     def get_random_index_answer(self):
+        """
+        Returns random index inbetween 3-12.
+        """
         random_index = random.randint(3, 12)  
         return random_index
     
     @keyword
     def get_random_first_name(self, filename='firstname.txt'):
+        """
+        Returns random first name from firstname.txt
+        """
         path = os.path.join(os.path.dirname(os.path.abspath(__file__)),filename)
         with open(path, 'r', encoding="UTF-8") as f:
             lines = f.readlines()
@@ -50,6 +56,9 @@ class CustomLibrary:
     
     @keyword
     def get_email(self, firstname):
+        """
+        Returns random email.
+        """
         random_number = random.randint(0, 99)
         domains = ['testmaili.fi', 'maili.com', 'netti.fi']
         domain = random.choice(domains)
@@ -58,6 +67,8 @@ class CustomLibrary:
     
     @keyword
     def read_poll_data(self, filename='Poll_answers.csv'):
-        """Reads CSV file and returns list of dicts with 'question' and 'answer' keys."""
+        """
+        Reads CSV file and returns list of dicts with 'question' and 'answer' keys.
+        """
         df = pd.read_csv(filename, delimiter=";")
         return df.to_dict(orient='records')

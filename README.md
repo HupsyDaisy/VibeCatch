@@ -1,6 +1,32 @@
 # VibeCatch
 
-These test cases in SUITES folder are for testing website VibeCheck (https://env-5369504.paas.datacenter.fi/) and needed resources in Resources folder
+This repository contains automated UI tests and API test for VibeCatch using Robot Framework and the Browser Library.
+
+These tests are part of a training project to automate core poll creation, asnwering polls, fetching data via API Key from Poll, poll deletion, and login functionalities. 
+
+## 📌 What’s Tested?
+The following test scenarios are automated:
+
+- Login Test
+
+Verifies login functionality with valid / invalid credentials.
+
+- Create Poll Test
+
+Creates a new poll with a given name.
+
+- Fetching Data From Poll Question Test
+
+Get feedback from poll answers and verifying removals.
+
+- Delete Poll Test
+
+Deletes a poll by locating it by name.
+
+## Project Structure
+
+## Setup Instructions
+
 
 In order to run tests, you need to install first test environment with following commands:
 
@@ -21,7 +47,7 @@ Initialize robot framework browser:
 rfbrowser init
 ```
 
-Secrets are hold in .env file and add there:
+Secrets for login and api key are hold in .env file and add there:
 
 ```
 USER=<YOUR_USERNAME>
