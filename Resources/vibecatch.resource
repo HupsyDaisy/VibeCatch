@@ -1,7 +1,8 @@
 *** Settings ***
+Documentation       Tests website's accessability standards'
+Library         Collections
 Library         String
 Library         Browser
-Library         Collections
 Library         RequestsLibrary
 Library         ../Libs/CustomLibrary.py
 Variables       locators.py
@@ -11,13 +12,14 @@ Variables       env_vars.py
 *** Variables ***
 ${URL}          https://env-5369504.paas.datacenter.fi/
 ${STATUS}       ${TRUE}
+${HEADLESS}     ${true}
 
 
 *** Keywords ***
 Open VibeCheck
     [Documentation]    Open website with given url
-    [Arguments]    ${browser}=chromium    ${headless}=${false}
-    New Browser    browser=${Browser}    headless=${Headless}
+    [Arguments]    ${browser}=chromium    ${headless}=${HEADLESS}
+    New Browser    browser=${browser}    headless=${headless}
     New Page    ${URL}
 
 Login
@@ -54,8 +56,7 @@ Login Test
 
 Create QWL Poll
     [Documentation]    Generates new Default QWL Poll with random name automatically and saves it.
-    [Arguments]
-    ...    ${project_prefix}=QWL Poll
+    [Arguments]    ${project_prefix}=QWL Poll
     ...    ${rand_len}=5
     ...    ${charset}=[LOWER]
     ...    ${type}=complete
@@ -88,8 +89,8 @@ Verify Poll Created
     Wait For Elements State    //*[contains(text(), "${pollname}")]    visible    timeout=120s
 
 Create And Verify QWL Poll
-    [Arguments]
-    ...    ${project_prefix}=QWL Poll
+    [Documentation]    Create and verify that poll is created
+    [Arguments]    ${project_prefix}=QWL Poll
     ...    ${rand_len}=5
     ...    ${charset}=[LOWER]
     ...    ${type}=complete
@@ -135,14 +136,14 @@ Create Custom Poll
     RETURN    ${poll_name}
 
 Create And Verify Custom Poll
+    [Documentation]    Verify that custom poll is created
     [Arguments]    ${project_prefix}    ${rand_len}    ${charset}    @{questions}
     ${pollname}=    Create Custom Poll    ${project_prefix}    ${rand_len}    ${charset}    @{questions}
     Verify Poll Created    ${pollname}
 
 Create 360 Poll
     [Documentation]    Generates new 360 Poll with random name automatically and adds one random question.
-    [Arguments]
-    ...    ${project_prefix}=360 Poll
+    [Arguments]    ${project_prefix}=360 Poll
     ...    ${rand_len}=5
     ...    ${charset}=[LOWER]
     ...    ${question_index}=RANDOM
@@ -178,8 +179,7 @@ Create 360 Poll
 
 Create And Verify 360 Poll
     [Documentation]    Generates new 360 Poll with random name automatically, adds one random question and verifies it.
-    [Arguments]
-    ...    ${project_prefix}
+    [Arguments]    ${project_prefix}
     ...    ${rand_len}
     ...    ${charset}
     ...    ${question_index}
@@ -312,12 +312,13 @@ Answer QWL Poll
     Fill QWL Poll
 
 Create New Session
+    [Documentation]    Create new API session
     [Arguments]    ${URL}    ${QWL_API_URL}
     Create Session    MySession    ${URL}
     ${resp}=    GET On Session    MySession    ${QWL_API_URL}
     Should Be Equal As Integers    ${resp.status_code}    200
 
-Answers for one question
+Answers For One Question
     [Documentation]    Returns list of feedback rows for the question.
     [Arguments]    ${URL}    ${QWL_API_URL}    ${QUESTION}
     Create Session    MySession    ${URL}

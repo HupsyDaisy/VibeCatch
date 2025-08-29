@@ -23,6 +23,10 @@ Get feedback from poll answers and verifying removals.
 
 Deletes a poll by locating it by name.
 
+- Accessability Test
+
+Checks how website meets accessability standards. 
+
 ## Project Structure
 
 ## Setup Instructions
@@ -77,3 +81,22 @@ In order to do API test to polls you need to create API key for polls:
 - Scroll to the bottom of the page and Click Open API button
 - Click Create API key
 
+## Running tests with Docker
+
+NOTE: Tests are not running properly inside docker image due to slow webpage. Adding more sleeps inbetween tests/keywords might solve this problem. 
+
+### Prerequisites
+
+- Docker Desktop
+
+### Build the Docker image:
+
+```
+docker build -t vibecatch_tests .
+```
+
+### Run the image with headful variable:
+
+```
+run --rm -e ROBOT_OPTIONS="-v HEADLESS:true" vibecatch_tests
+```

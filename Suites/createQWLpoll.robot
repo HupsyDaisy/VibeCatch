@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation       Creates QWL Poll
 Resource            ../Resources/vibecatch.resource
 
 Suite Setup         Open And Login VibeCheck

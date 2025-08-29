@@ -1,0 +1,13 @@
+[tool.robocop]
+
+[tool.robocop.lint]
+# Only needed if you want to select/ignore rules explicitly:
+# select = ["*"]
+# ignore = []
+
+# Configure rule parameters:
+configure = [
+    "line-too-long.line_length=180"
+    "too-many-arguments.max_args=7"
+    "too-many-calls-in-keyword.max_calls=23"
+]

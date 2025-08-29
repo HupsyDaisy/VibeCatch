@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation       Tests login functionality with valid and invalid credentials
 Resource            ../Resources/vibecatch.resource
 
 Test Setup          Open VibeCheck

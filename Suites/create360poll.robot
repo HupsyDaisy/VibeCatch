@@ -1,4 +1,6 @@
 *** Settings ***
+Documentation       This suite creates 360  Polls
+
 Resource            ../Resources/vibecatch.resource
 
 Suite Setup         Open And Login VibeCheck

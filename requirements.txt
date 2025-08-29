@@ -4,3 +4,5 @@ python-dotenv
 pandas
 robotframework-requests
 robotframework-jsonlibrary
+robotframework-axelibrary
+robotframework-seleniumlibrary

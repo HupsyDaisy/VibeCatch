@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation       Answers 360 Poll using CSV mapping
 Resource            ../Resources/vibecatch.resource
 
 Test Setup          Open And Login VibeCheck
