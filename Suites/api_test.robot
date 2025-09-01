@@ -1,5 +1,6 @@
 *** Settings ***
-Documentation       API test to check respond from answered QWL Poll questions
+Documentation       API test to check respond from answered QWL Poll questions. 
+...    Input current QWL API key from Poll in .env file. Readme has instructions to create API key. 
 Resource        ../Resources/vibecatch.resource
 
 Test Tags       api

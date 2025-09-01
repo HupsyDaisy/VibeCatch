@@ -2,17 +2,12 @@
 Documentation       Tests website's accessability standards'
 Library         Collections
 Library         String
-Library         Browser
+Library         Browser    enable_presenter_mode=true
 Library         RequestsLibrary
 Library         ../Libs/CustomLibrary.py
 Variables       locators.py
 Variables       env_vars.py
-
-
-*** Variables ***
-${URL}          https://env-5369504.paas.datacenter.fi/
-${STATUS}       ${TRUE}
-${HEADLESS}     ${true}
+Resource        ../Resources/common_var.resource
 
 
 *** Keywords ***
@@ -274,7 +269,7 @@ Remove Single Poll By Name
     Wait For Elements State    ${PROJECT_ROW}    detached    ${wait_timeout}
 
 Fill QWL Poll
-    [Documentation]    Fill QWL Poll with random or seeded answers from a chosen pool.
+    [Documentation]    Fill QWL Poll with random or selected answers from a chosen pool.
     [Arguments]    ${name_poll}=QWL Poll    ${pool}=ALL    ${seed}=${NONE}    ${fixed_answer}=${NONE}
     Wait For Elements State
     ...    //div[contains(@class,"row") and contains(@class,"projectRow")][ .//a[contains(@class,"project-name")][contains(normalize-space(.),"${name_poll}")] ][1]//a[@mattooltip="View poll form"]
@@ -351,3 +346,33 @@ Answers For One Question
     Log To Console    Found ${count} answers for: ${QUESTION}
     ${first}=    Get From List    ${answers}    0
     Log    ${first}
+
+Answer Custom Poll
+    [Documentation]    Answer custom poll with random or selected answers from POSITIVE or NEGATIVE pool.
+    [Arguments]    ${poll_name}=Custom Poll    ${pool}=ALL    ${fixed_answer}=${NONE}
+    Wait For Elements State
+    ...    //div[contains(@class,"row") and contains(@class,"projectRow")][ .//a[contains(@class,"project-name")][contains(normalize-space(.),"${poll_name}")] ][1]//a[@mattooltip="View poll form"]
+    ...    visible
+    ...    20s
+    Click
+    ...    //div[contains(@class,"row") and contains(@class,"projectRow")][ .//a[contains(@class,"project-name")][contains(normalize-space(.),"${poll_name}")] ][1]//a[@mattooltip="View poll form"]
+    Sleep    5
+    Switch Page    NEW
+    Wait For Elements State    ${NEXT_BUTTON_FEEDBACK}    visible    20s
+    Click    ${NEXT_BUTTON_FEEDBACK}
+    WHILE    True
+        ${visible_elements}=    Get Element Count    ${NEXT_PAGE_BUTTON_QWL_POLL}
+        IF    '${fixed_answer}' != '${NONE}'
+            VAR      ${random_locator}    ${fixed_answer}
+        ELSE
+            ${random_locator}=    Get Random Custom Poll Answer    ${pool}
+        END
+        Click    ${${random_locator}}
+        IF    ${visible_elements} >= 1
+            Click    ${NEXT_PAGE_BUTTON_QWL_POLL}
+        ELSE
+            BREAK
+        END
+    END
+    Click    ${SEND_FEEDBACK_BUTTON}
+    Wait For Elements State    ${THANK_YOU_FEEDBACK_MESSAGE}

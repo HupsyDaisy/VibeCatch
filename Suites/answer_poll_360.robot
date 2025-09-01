@@ -5,7 +5,7 @@ Resource            ../Resources/vibecatch.resource
 Test Setup          Open And Login VibeCheck
 Test Teardown       Close Browser
 
-Test Tags           poll
+Test Tags           poll    smoke
 
 
 *** Test Cases ***

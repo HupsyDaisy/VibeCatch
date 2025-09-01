@@ -50,4 +50,9 @@ ADD_SELECTED_QUESTION = '//button[normalize-space()="Add 1 selected question"]'
 ENTER_NAME_POLL_ANSWER = '//input[@placeholder="Enter your name here"]'
 ENTER_EMAIL_POLL_ANSWER = '//input[@placeholder="Enter your email here"]'
 CONTAINS_EVALUATION_REPORT = '//*[contains(text(), "evaluation report")]'
-
+#answercustompoll
+WORST_ICON = '//div[contains(@class,"question") and contains(@class, "fullHeight") and not(@hidden)]//a[1]//img'
+POOR_ICON = '//div[contains(@class,"question") and contains(@class, "fullHeight") and not(@hidden)]//a[2]//img'
+AVERAGE_ICON = '//div[contains(@class,"question") and contains(@class, "fullHeight") and not(@hidden)]//a[3]//img'
+GOOD_ICON = '//div[contains(@class,"question") and contains(@class, "fullHeight") and not(@hidden)]//a[4]//img'
+BEST_ICON = '//div[contains(@class,"question") and contains(@class, "fullHeight") and not(@hidden)]//a[5]//img'

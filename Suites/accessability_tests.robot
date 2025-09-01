@@ -2,10 +2,7 @@
 Documentation       Tests website's accessability standards
 Library             SeleniumLibrary
 Library             AxeLibrary
-
-
-*** Variables ***
-${URL}              https://env-5369504.paas.datacenter.fi/
+Resource            ../Resources/common_var.resource
 
 
 *** Test Cases ***

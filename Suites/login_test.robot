@@ -6,7 +6,7 @@ Test Setup          Open VibeCheck
 Test Teardown       Close Browser
 Test Template       Login Test
 
-Test Tags           smoke
+Test Tags           smoke    login
 
 
 *** Test Cases ***
