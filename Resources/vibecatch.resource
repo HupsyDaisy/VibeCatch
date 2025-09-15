@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation       Tests website's accessability standards'
+Documentation   Keyword resource file for Suites
 Library         Collections
 Library         String
 Library         Browser    enable_presenter_mode=true
@@ -81,7 +81,7 @@ Verify Poll Created
     [Arguments]    ${pollname}
     Go To    ${URL}
     Sleep    10
-    Wait For Elements State    //*[contains(text(), "${pollname}")]    visible    timeout=120s
+    Wait For Elements State    //a[normalize-space()="${pollname}"]    visible    timeout=120s
 
 Create And Verify QWL Poll
     [Documentation]    Create and verify that poll is created
