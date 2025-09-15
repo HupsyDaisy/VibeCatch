@@ -5,7 +5,7 @@ Resource            ../Resources/vibecatch.resource
 Test Setup          Open And Login VibeCheck
 Test Teardown       Close Browser
 
-Test Tags           Remove
+Test Tags           remove
 
 
 *** Test Cases ***

@@ -8,7 +8,7 @@ Suite Setup         Open And Login VibeCheck
 Suite Teardown      Close Browser
 Test Template       Create And Verify Custom Poll
 
-Test Tags           poll
+Test Tags           poll    smoke
 
 
 *** Test Cases ***
